@@ -1,3 +1,4 @@
+const firebase = requite('firebase');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
