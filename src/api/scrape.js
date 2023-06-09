@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       },
     });
     res.setHeader('Content-Type', 'text/html');
-    res.status(200).send(response.data);
+    res.status(200).json({ data: response.data });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'An error occurred' });
