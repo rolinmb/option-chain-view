@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Firebase Credentials
 src/firebase.js
+
+# icon
+public/favicon.ico
