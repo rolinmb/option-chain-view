@@ -24,3 +24,6 @@ yarn-error.log*
 
 # icon
 public/favicon.ico
+
+# vercel
+.vercel
