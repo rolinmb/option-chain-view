@@ -15,7 +15,7 @@ export class ChainPanel extends Component{
 
     fetchData = async () => {
         try {
-            const response = await axios.get('https://vercel-chain-scrape.vercel.app/api/scrape');
+            const response = await axios.get('https://vercel-chain-scrape.vercel.app');
             this.setState({ chainData: response.data });
         } catch (error) {
             console.error('Error:', error);
@@ -25,7 +25,7 @@ export class ChainPanel extends Component{
     render(){
         return(
             <div id='chain_wrap'>
-                <h2>Response from Vercel Serverless Function</h2>
+                <h2>Response Status from Vercel Serverless Function</h2>
                 <p>{this.state.chainData}</p>
             </div>
         );
