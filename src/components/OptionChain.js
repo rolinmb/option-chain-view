@@ -15,7 +15,7 @@ export class OptionChain extends Component{
 
     fetchData = async () => {
         try {
-            const response = await axios.get('http://vercel-chain-scrape.vercel.app/api/scrape');
+            const response = await axios.get('https://vercel-chain-scrape.vercel.app/api/scrape');
             this.setState({ chainData: response.data });
         } catch (error) {
             console.error('Error:', error);
