@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Plot from 'react-plotly.js';
 
 export class ChainPanel extends Component{
     constructor(props){
@@ -39,8 +40,45 @@ export class ChainPanel extends Component{
             return;
         }
     };
-
+    
     render(){
+        const { chainData } = this.state;
+        let xData = [];
+        let yData = [];
+        let zData = [];
+        for(let i = 0; i < chainData.length; i++){
+            const columns = chainData[i].split(',');
+            const yte = parseFloat(columns[3]);
+            const strike = parseFloat(columns[6]);
+            const zVal = parseFloat(columns[chainData.length-1]);
+            xData.push(yte);
+            yData.push(strike);
+            zData.push(zVal);
+        }
+
+        const combinedData = [{
+            x: xData,
+            y: yData,
+            z: zData,
+            mode: 'markers',
+            marker: {
+                size: 3
+            },
+            type: 'scatter3d'
+        }];
+        
+        const plotLayout = {
+            margin: {
+                l: 0,
+                r: 0,
+                b: 0,
+                t: 0
+            },
+            scene: {
+                webgl: true
+            },
+        };
+
         return(
             <div id='chain_wrap'>
                 <div id='chain_input'>
@@ -112,7 +150,7 @@ export class ChainPanel extends Component{
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.chainData.map((row, rIndex) => {
+                            {chainData.map((row, rIndex) => {
                                 var cells = row.split(',');
                                 var tableCells = [];
                                 for(let cIndex = 0; cIndex < cells.length; cIndex++){
@@ -128,6 +166,8 @@ export class ChainPanel extends Component{
                             })}
                         </tbody>
                     </table>
+                    <h2>Selected Option Chain Surface Plot:</h2>
+                    <Plot data={combinedData} layout={plotLayout} />
                     <h2>Selected Option Chain .csv raw:</h2>
                     <ul id='chain_raw'>
                         {this.state.chainData.map((elem, index) => (<li key={index}>{elem}</li>))}
