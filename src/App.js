@@ -1,7 +1,7 @@
 import './App.css';
-import { TimeSeries } from './TimeSeries';
-import { FileList } from './FileList';
-import { OptionChain } from './OptionChain';
+import { TimeSeries } from './components/TimeSeries';
+import { FileList } from './components/FileList';
+import { OptionChain } from './components/OptionChain';
 
 function App() {
   return (

@@ -25,7 +25,7 @@ export class OptionChain extends Component{
     render(){
         return(
             <div id='chain_wrap'>
-                <h2>Scraped HTML from Vercel Serverless Function</h2>
+                <h2>Response from Vercel Serverless Function</h2>
                 <p>{this.state.chainData}</p>
             </div>
         );

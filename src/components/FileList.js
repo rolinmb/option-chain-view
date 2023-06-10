@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { storage } from './firebase';
+import { storage } from '../firebase';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
 
 export class FileList extends Component{
