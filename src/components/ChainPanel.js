@@ -1,18 +1,51 @@
 import React, { Component } from 'react';
-import Plot from 'react-plotly.js';
+import { storage } from '../firebase';
+import { ref, getDownloadURL, listAll } from 'firebase/storage';
 
 export class ChainPanel extends Component{
     constructor(props){
         super(props);
         this.state = {
-            chainData: []
+            ticker: '',
+            chainData: [],
+            imgUrls: []
         }
     }
+
+    fetchSurfaceImages = async (div) => {
+        try{
+            const storageRef = ref(storage, 'png_files');
+            const listResult = await listAll(storageRef);
+            const allUrls = await Promise.all(
+                listResult.items.map((item) => getDownloadURL(item)));
+            const relevantUrls = allUrls.filter(str => str.includes(this.state.ticker));
+            if(relevantUrls.length === 0){
+                alert('No .png files available for '+this.state.ticker+' option chain');
+            }else if(relevantUrls.length < 18){
+                alert('Not all possible .png files have been uploaded to Firebase Cloud Storage for '+this.state.ticker+'; only displaying what was found');
+            }
+            this.setState({ pngUrls: relevantUrls });
+            for(let i = 0; i < relevantUrls.length; i++){
+                const calcMethod = relevantUrls[i].split('_')[2];
+                var img_header = document.createElement('h3');
+                img_header.innerHTML = '$'+this.state.ticker+' Option Chain '+calcMethod+' & '+calcMethod+' Gradient Surfaces';
+                div.appendChild(img_header);
+                var img_elem = document.createElement('img');
+                img_elem.src = relevantUrls[i];
+                div.appendChild(img_elem);
+            }
+        }catch(err){
+            console.error('Error retrieving .png filed for '+this.state.ticker+' from Firebase Cloud Storage');
+            console.error(err);
+            this.setState({ pngUrls: [] });
+        }
+    };
 
     handleChainCsvSelect = (e) => {
         const files = e.target.files || e.dataTransfer.files;
         if(files.length > 0){
             const file = files[0];
+            this.setState({ ticker: file.name.substring(0, file.name.indexOf('_')) });
             if(!file.name.includes('_chain.csv')){
                 alert('Please select a .csv file with name format: %TICKER%_chain.csv');
                 document.getElementById('chain_csv_select').value = '';
@@ -39,45 +72,20 @@ export class ChainPanel extends Component{
             document.getElementById('chain_csv_select').value = '';
             return;
         }
+        // Update 'surfaces_area' <div> from Firebase Cloud Storage matching files
+        let surfacesArea = document.getElementById('surfaces_area');
+        if(!surfacesArea.hasChildNodes()){
+            this.fetchSurfaceImages(surfacesArea);
+        }else{
+            while(surfacesArea.firstChild){
+                surfacesArea.removeChild(surfacesArea.firstChild);
+            }
+            this.fetchSurfaceImages(surfacesArea);
+        }
     };
     
     render(){
         const { chainData } = this.state;
-        let xData = [];
-        let yData = [];
-        let zData = [];
-        for(let i = 0; i < chainData.length; i++){
-            const columns = chainData[i].split(',');
-            const yte = parseFloat(columns[3]);
-            const strike = parseFloat(columns[6]);
-            const zVal = parseFloat(columns[chainData.length-1]);
-            xData.push(yte);
-            yData.push(strike);
-            zData.push(zVal);
-        }
-
-        const combinedData = [{
-            x: xData,
-            y: yData,
-            z: zData,
-            mode: 'markers',
-            marker: {
-                size: 3
-            },
-            type: 'scatter3d'
-        }];
-        
-        const plotLayout = {
-            margin: {
-                l: 0,
-                r: 0,
-                b: 0,
-                t: 0
-            },
-            scene: {
-                webgl: true
-            },
-        };
 
         return(
             <div id='chain_wrap'>
@@ -166,8 +174,8 @@ export class ChainPanel extends Component{
                             })}
                         </tbody>
                     </table>
-                    <h2>Selected Option Chain Surface Plot:</h2>
-                    <Plot data={combinedData} layout={plotLayout} />
+                    <h2>Selected Option Chain Surfaces:</h2>
+                    <div id='surfaces_area' style={{display: 'flex', flexDirection: 'column', alignItems:'center'}}></div>
                     <h2>Selected Option Chain .csv raw:</h2>
                     <ul id='chain_raw'>
                         {this.state.chainData.map((elem, index) => (<li key={index}>{elem}</li>))}

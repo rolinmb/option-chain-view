@@ -33,11 +33,12 @@ export class FileList extends Component{
     };
 
     render(){
+        const { pngUrls } = this.state;
         return(
             <div id='png_list_wrap'>
                 <h2>Firebase Cloud Storage Bucket Contents:</h2>
                 <ul id='png_file_list'>
-                    {this.state.pngUrls.map((pngUrl, index) => (
+                    {pngUrls.map((pngUrl, index) => (
                         <li key={index}>{pngUrl}</li>))}
                 </ul>
             </div>
