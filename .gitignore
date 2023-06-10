@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # firebase credentials
-/src/firebase.js
+src/firebase.js
 
 # icon
-/public/favicon.ico
+public/favicon.ico
