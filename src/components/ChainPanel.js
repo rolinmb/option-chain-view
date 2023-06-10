@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-export class OptionChain extends Component{
+export class ChainPanel extends Component{
     constructor(props){
         super(props);
         this.state = {
-            chainData: ''
+            chainData: null
         }
     }
 

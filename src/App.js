@@ -1,7 +1,7 @@
 import './App.css';
 import { TimeSeries } from './components/TimeSeries';
 import { FileList } from './components/FileList';
-import { OptionChain } from './components/OptionChain';
+import { ChainPanel } from './components/ChainPanel';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       </header>
       <TimeSeries />
       <FileList />
-      <OptionChain />
+      <ChainPanel />
     </div>
   );
 }
