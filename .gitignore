@@ -24,6 +24,7 @@ yarn-error.log*
 
 # firebase credentials
 src/firebase.js
+src/chain-surface-firebase-adminsdk-9vpe1-c831f22884.json
 
 # icon
 public/favicon.ico
