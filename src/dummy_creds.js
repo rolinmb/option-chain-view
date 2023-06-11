@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 // var admin = require('firebase-admin');
-// var serviceAccount = require('chain-surface-firebase-adminsdk-9vpe1-c831f22884.json');
+// var serviceAccount = require('dummy-admin-cred.json');
 const firebaseConfig = {
   apiKey: "dummy-key",
   authDomain: "dummy-name.firebaseapp.com",
