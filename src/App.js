@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Option Chain Surface Visualizations</h1>
+        <h1>Option Chain View</h1>
       </header>
       <TimeSeries />
       <FileList />

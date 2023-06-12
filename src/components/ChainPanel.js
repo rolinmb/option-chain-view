@@ -88,13 +88,13 @@ export class ChainPanel extends Component{
         const { chainData } = this.state;
 
         return(
-            <div id='chain_wrap'>
+            <div id='chain_wrap' style={{ paddingTop: '20px' }}>
                 <div id='chain_input'>
                     <h2>Selected Option Chain:</h2>
                     <input id='chain_csv_select' type='file' accepts='.csv' onChange={this.handleChainCsvSelect} />
                 </div>
-                <div id='chain_display'>
-                    <table id='chain_table' border="1" style={{borderCollapse: 'collapse'}}>
+                <div id='chain_display' style={{ height: '400px', overflowX: 'auto', overflowY: 'auto' }}>
+                    <table id='chain_table' border="1" style={{ borderCollapse: 'collapse' }}>
                         <thead>
                             <tr>
                                 <th>Ticker</th>
@@ -174,13 +174,13 @@ export class ChainPanel extends Component{
                             })}
                         </tbody>
                     </table>
-                    <h2>Selected Option Chain Surfaces:</h2>
-                    <div id='surfaces_area' style={{display: 'flex', flexDirection: 'column', alignItems:'center'}}></div>
-                    <h2>Selected Option Chain .csv raw:</h2>
-                    <ul id='chain_raw'>
-                        {this.state.chainData.map((elem, index) => (<li key={index}>{elem}</li>))}
-                    </ul>
                 </div>
+                <h2>Selected Option Chain Surfaces:</h2>
+                <div id='surfaces_area' style={{display: 'flex', flexDirection: 'column', alignItems:'center'}}></div>
+                <h2>Selected Option Chain .csv raw:</h2>
+                <ul id='chain_raw' style={{ height: '400px'}}>
+                    {this.state.chainData.map((elem, index) => (<li key={index}>{elem}</li>))}
+                </ul>
             </div>
         );
     }

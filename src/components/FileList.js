@@ -11,7 +11,7 @@ export class FileList extends Component{
     }
 
     async componentDidMount() {
-        await this.fetchPngUrls();
+        await this.fetchAvailablePngs();
         this.refreshInterval = setInterval(this.fetchPngUrls, 5000);
     }
 
@@ -19,13 +19,16 @@ export class FileList extends Component{
         clearInterval(this.refreshInterval);
     }
 
-    fetchPngUrls = async () => {
+    fetchAvailablePngs = async () => {
         try{
             const storageRef = ref(storage, 'png_files');
             const listResult = await listAll(storageRef);
-            const fresh_urls = await Promise.all(
+            const fresh_list = await Promise.all(
                 listResult.items.map((item) => getDownloadURL(item)));
-            this.setState({ pngUrls: fresh_urls });
+            for(let i = 0; i < fresh_list.length; i++){
+                fresh_list[i] = fresh_list[i].split('_')[1].replace('files%2F','')+' '+fresh_list[i].split('_')[2];
+            }
+            this.setState({ pngUrls: fresh_list });
         }catch(err){
             console.error('Error retrieving .png files from Firebase Cloud Storage:', err);
             this.setState({ pngUrls: [] });
@@ -35,8 +38,8 @@ export class FileList extends Component{
     render(){
         const { pngUrls } = this.state;
         return(
-            <div id='png_list_wrap'>
-                <h2>Firebase Cloud Storage Bucket Contents:</h2>
+            <div id='png_list_wrap' style={{ paddingTop: '20px', width: '300px',  height: '420px', overflowY: 'auto', margin: 'auto' }}>
+                <h2>Available .png files in Firebase Cloud Storage:</h2>
                 <ul id='png_file_list'>
                     {pngUrls.map((pngUrl, index) => (
                         <li key={index}>{pngUrl}</li>))}
