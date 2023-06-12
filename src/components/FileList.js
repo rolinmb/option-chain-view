@@ -38,7 +38,7 @@ export class FileList extends Component{
     render(){
         const { pngUrls } = this.state;
         return(
-            <div id='png_list_wrap' style={{ paddingTop: '20px', width: '300px',  height: '420px', overflowY: 'auto', margin: 'auto' }}>
+            <div id='png_list_wrap' style={{color: '#000000', backgroundColor: '#ffffff', width: '300px',  height: '420px', overflowY: 'auto', margin: 'auto' }}>
                 <h2>Available .png files in Firebase Cloud Storage:</h2>
                 <ul id='png_file_list'>
                     {pngUrls.map((pngUrl, index) => (

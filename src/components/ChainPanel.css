@@ -1,0 +1,13 @@
+th {
+    background: white;
+    color: black;
+    top: 0;
+    position: sticky;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+td {
+    text-align: center;
+}

@@ -1,3 +1,4 @@
+import './ChainPanel.css'
 import React, { Component } from 'react';
 import { storage } from '../firebase';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
@@ -93,8 +94,12 @@ export class ChainPanel extends Component{
                     <h2>Selected Option Chain:</h2>
                     <input id='chain_csv_select' type='file' accepts='.csv' onChange={this.handleChainCsvSelect} />
                 </div>
-                <div id='chain_display' style={{ height: '400px', overflowX: 'auto', overflowY: 'auto' }}>
-                    <table id='chain_table' border="1" style={{ borderCollapse: 'collapse' }}>
+                <div id='chain_display'
+                    style={{
+                        overflowY: 'auto', margin: 'auto', width: '1333px',
+                        height: '400px', overflow: 'auto'
+                }}>
+                    <table id='chain_table' style={{ border: '1', borderCollapse: 'collapse'}}>
                         <thead>
                             <tr>
                                 <th>Ticker</th>
@@ -176,11 +181,12 @@ export class ChainPanel extends Component{
                     </table>
                 </div>
                 <h2>Selected Option Chain Surfaces:</h2>
-                <div id='surfaces_area' style={{display: 'flex', flexDirection: 'column', alignItems:'center'}}></div>
-                <h2>Selected Option Chain .csv raw:</h2>
-                <ul id='chain_raw' style={{ height: '400px'}}>
-                    {this.state.chainData.map((elem, index) => (<li key={index}>{elem}</li>))}
-                </ul>
+                <div id='surfaces_area'
+                    style={{
+                        margin: 'auto !important', display: 'flex !important', flexDirection: 'column !important',
+                        alignItems:'center !important', height: '300px !important'
+                }}>
+                </div>
             </div>
         );
     }
