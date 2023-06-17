@@ -9,13 +9,13 @@ var func_names = [
     'Delta','Elasticity','Vega','Rho','Epsilon','Theta',
     'Gamma','Vanna','Charm','Vomma','Veta','Speed',
     'Zomma','Color','Ultima'
-];
+];/*
 var func_strs = [
     'TheoDif','&sigma;','Mid&sigma;',
     '&Delta;','&lambda;','Vega','&rho;','&epsilon;','&Theta;',
     '&Gamma;','Vanna','Charm','Vomma','Veta','Speed',
     'Zomma','Color','Ultima'
-];
+];*/
 
 export class ChainPanel extends Component{
     constructor(props){
@@ -198,14 +198,14 @@ export class ChainPanel extends Component{
             this.fetchSurfaceImages(imgsArea);
         }
     };
-    
+
     render(){
         const { chainData, ticker, ytes, strikes_yte, call_df, put_df } = this.state;
 
         return(
             <div id='chain_wrap' style={{ paddingTop: '20px' }}>
                 <div id='chain_input'>
-                    <h2>Selected Option Chain:</h2>
+                    <h2>{ticker} Option Chain:</h2>
                     <input id='chain_csv_select' type='file' accepts='.csv' onChange={this.handleChainCsvSelect} />
                 </div>
                 <div id='chain_display'
@@ -294,10 +294,10 @@ export class ChainPanel extends Component{
                         </tbody>
                     </table>
                 </div>
-                <h2>Option Chain Surface from Plotly.js:</h2>
-                <select id="surface_select" onSelect={() => {}}>
+                <h2>{ticker} Option Chain Surface (w/ Plotly.js):</h2>
+                <select id="surface_select">
                     {func_names.map(method => {
-                        return <option key={method}>{method}</option>
+                        return <option key={method} value={method}>{method}</option>
                     })}
                 </select>
                 <div id="csurface_area">
@@ -305,7 +305,7 @@ export class ChainPanel extends Component{
                         strikes={strikes_yte}
                         ytes={ytes}
                         data={call_df['iv']}
-                        title={ticker+" Call iv"}
+                        title={ticker+" Call IV"}
                     />
                 </div>
                 <div id="psurface_area">
@@ -313,10 +313,10 @@ export class ChainPanel extends Component{
                         strikes={strikes_yte}
                         ytes={ytes}
                         data={put_df['iv']}
-                        title={ticker+" Put iv"}
+                        title={ticker+' Put IV'}
                     />
                 </div>
-                <h2>Selected Option Chain Surface Images from Python:</h2>
+                <h2>{ticker} Chain Surface Images (w/ python/matplotlib):</h2>
                 <div id='imgs_area'
                     style={{
                         margin: 'auto !important', display: 'flex !important', flexDirection: 'column !important',

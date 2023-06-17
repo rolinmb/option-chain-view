@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
 
 export class ChainSurface extends Component{
-    constructor(props){
-        super(props);
-    }
-
     render(){
         return(
             <div id="plotly_area">
@@ -18,9 +14,9 @@ export class ChainSurface extends Component{
                     }]}
                     layout={{
                         autosize: false,
-                        width: 750,
-                        height: 750,
-                        title: this.props.title
+                        width: 700,
+                        height: 700,
+                        title: this.props.title,
                     }}
                 />
             </div>
