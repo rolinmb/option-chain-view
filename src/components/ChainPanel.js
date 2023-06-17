@@ -1,15 +1,16 @@
 import './ChainPanel.css'
 import React, { Component } from 'react';
-import { ChainSurface } from './ChainSurface.js';
+//import { ChainSurface } from './ChainSurface.js';
 import { storage } from '../firebase';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
+import Plot from 'react-plotly.js';
 
-var func_names = [
+/*var func_names = [
     'TheoDif','IV','MidIV',
     'Delta','Elasticity','Vega','Rho','Epsilon','Theta',
     'Gamma','Vanna','Charm','Vomma','Veta','Speed',
     'Zomma','Color','Ultima'
-];/*
+];
 var func_strs = [
     'TheoDif','&sigma;','Mid&sigma;',
     '&Delta;','&lambda;','Vega','&rho;','&epsilon;','&Theta;',
@@ -27,6 +28,7 @@ export class ChainPanel extends Component{
             strikes_yte: [],
             call_df: {},
             put_df: {},
+            select_method: 'vomma',
             pngUrls: []
         }
     }
@@ -200,7 +202,7 @@ export class ChainPanel extends Component{
     };
 
     render(){
-        const { chainData, ticker, ytes, strikes_yte, call_df, put_df } = this.state;
+        const { chainData, ticker, ytes, strikes_yte, call_df, put_df, select_method } = this.state;
 
         return(
             <div id='chain_wrap' style={{ paddingTop: '20px' }}>
@@ -295,25 +297,38 @@ export class ChainPanel extends Component{
                     </table>
                 </div>
                 <h2>{ticker} Option Chain Surface (w/ Plotly.js):</h2>
-                <select id="surface_select">
-                    {func_names.map(method => {
-                        return <option key={method} value={method}>{method}</option>
-                    })}
-                </select>
                 <div id="csurface_area">
-                    <ChainSurface
-                        strikes={strikes_yte}
-                        ytes={ytes}
-                        data={call_df['iv']}
-                        title={ticker+" Call IV"}
+                    <Plot 
+                        data = {[{
+                            type: 'surface',
+                            colorscale: 'Electric',
+                            x: strikes_yte,
+                            y: ytes,
+                            z: call_df[select_method],
+                        }]}
+                        layout={{
+                            autosize: false,
+                            width: 700,
+                            height: 700,
+                            title: ticker+" Call "+select_method,
+                        }}
                     />
                 </div>
                 <div id="psurface_area">
-                    <ChainSurface
-                        strikes={strikes_yte}
-                        ytes={ytes}
-                        data={put_df['iv']}
-                        title={ticker+' Put IV'}
+                    <Plot 
+                        data = {[{
+                            type: 'surface',
+                            colorscale: 'Electric',
+                            x: strikes_yte,
+                            y: ytes,
+                            z: put_df[select_method],
+                        }]}
+                        layout={{
+                            autosize: false,
+                            width: 700,
+                            height: 700,
+                            title: ticker+" Put "+select_method,
+                        }}
                     />
                 </div>
                 <h2>{ticker} Chain Surface Images (w/ python/matplotlib):</h2>
