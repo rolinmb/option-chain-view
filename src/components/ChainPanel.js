@@ -1,6 +1,6 @@
 import './ChainPanel.css'
 import React, { Component } from 'react';
-//import { ChainSurface } from './ChainSurface.js';
+import { ChainSurface } from './ChainSurface.js';
 import { storage } from '../firebase';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
 import Plot from 'react-plotly.js';
@@ -28,7 +28,6 @@ export class ChainPanel extends Component{
             strikes_yte: [],
             call_df: {},
             put_df: {},
-            select_method: 'vomma',
             pngUrls: []
         }
     }
@@ -297,39 +296,45 @@ export class ChainPanel extends Component{
                     </table>
                 </div>
                 <h2>{ticker} Option Chain Surface (w/ Plotly.js):</h2>
-                <div id="csurface_area">
-                    <Plot 
-                        data = {[{
-                            type: 'surface',
-                            colorscale: 'Electric',
-                            x: strikes_yte,
-                            y: ytes,
-                            z: call_df[select_method],
-                        }]}
-                        layout={{
-                            autosize: false,
-                            width: 700,
-                            height: 700,
-                            title: ticker+" Call "+select_method,
-                        }}
-                    />
+                <div id="csurfaces_area">
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["theo_dif"]} title={ticker+" Call Theoretical Value Differential"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["iv"]} title={ticker+" Call IV"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["mid_iv"]} title={ticker+" Call Mid IV"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["delta"]} title={ticker+" Call Delta"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["lambda"]} title={ticker+" Call Elasticity"}/>
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["vega"]} title={ticker+" Call Vega"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["rho"]} title={ticker+" Call Rho"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["epsilon"]} title={ticker+" Call Epsilon"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["theta"]} title={ticker+" Call Theta"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["gamma"]} title={ticker+" Call Gamma"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["vanna"]} title={ticker+" Call Vanna"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["charm"]} title={ticker+" Call Charm"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["vomma"]} title={ticker+" Call Vomma"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["veta"]} title={ticker+" Call Veta"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["speed"]} title={ticker+" Call Speed"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["zomma"]} title={ticker+" Call Zomma"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["color"]} title={ticker+" Call Color"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={call_df["ultima"]} title={ticker+" Call Ultima"} />
                 </div>
                 <div id="psurface_area">
-                    <Plot 
-                        data = {[{
-                            type: 'surface',
-                            colorscale: 'Electric',
-                            x: strikes_yte,
-                            y: ytes,
-                            z: put_df[select_method],
-                        }]}
-                        layout={{
-                            autosize: false,
-                            width: 700,
-                            height: 700,
-                            title: ticker+" Put "+select_method,
-                        }}
-                    />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["theo_dif"]} title={ticker+" Put Theoretical Value Differential"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["iv"]} title={ticker+" Put IV"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["mid_iv"]} title={ticker+" Put Mid IV"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["delta"]} title={ticker+" Put Delta"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["lambda"]} title={ticker+" Put Elasticity"}/>
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["vega"]} title={ticker+" Put Vega"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["rho"]} title={ticker+" Put Rho"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["epsilon"]} title={ticker+" Put Epsilon"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["theta"]} title={ticker+" Put Theta"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["gamma"]} title={ticker+" Put Gamma"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["vanna"]} title={ticker+" Put Vanna"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["charm"]} title={ticker+" Put Charm"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["vomma"]} title={ticker+" Put Vomma"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["veta"]} title={ticker+" Put Veta"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["speed"]} title={ticker+" Put Speed"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["zomma"]} title={ticker+" Put Zomma"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["color"]} title={ticker+" Put Color"} />
+                    <ChainSurface strikes_yte={strikes_yte} ytes={ytes} data={put_df["ultima"]} title={ticker+" Put Ultima"} />
                 </div>
                 <h2>{ticker} Chain Surface Images (w/ python/matplotlib):</h2>
                 <div id='imgs_area'

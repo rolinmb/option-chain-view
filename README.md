@@ -9,3 +9,5 @@ Example python back-end to parse HTML option chain data and generate .csv and .p
 TODO: add ability to upload chain .csv and or time series .csv files, as well as suraface .png images to Firebase Cloud Storage in local python script
 
 src/dummy_creds.js represents where you would enter your own Google Firebase project credentials; obfuscated here for obvious reasons, just note that src/firebase.js is referenced in all of the live code instead of src/dummy_creds.js
+
+Sometimes works with Firefox but works most consistently in Google Chrome. The sheer number of plotly.js 3D surfaces is too much for WebGL.
